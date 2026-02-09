@@ -14,10 +14,17 @@
       font-family: 'Comic Sans MS', cursive, sans-serif;
     }
 
-    .container {
-      text-align: center;
-      position: relative;
-    }
+   .container {
+  text-align: center;
+  position: relative;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  position: relative;
+}
 
     h1 {
       font-size: 3rem;
@@ -40,18 +47,18 @@
       margin-right: 20px;
     }
 
-    #no {
-      background-color: #999;
-      color: white;
-      position: absolute;
-    }
+   #no {
+  position: absolute;
+}
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Will you be my Valentine? 💘</h1>
-    <button id="yes">Yes 💖</button>
-    <button id="no">No 💔</button>
+      <div class="buttons">
+        <button id="yes">Yes 💖</button>
+        <button id="no">No 💔</button>
+      </div>
   </div>
 
 <script>
@@ -68,9 +75,17 @@
   document.body.appendChild(message);
 
   // Initial position
-  noBtn.style.left = "50%";
-  noBtn.style.top = "60%";
-  noBtn.style.transform = "translateX(-50%)";
+// Start the "No" button to the right of "Yes"
+const buttons = document.querySelector(".buttons");
+const yesBtn = document.getElementById("yes");
+
+const yesRect = yesBtn.getBoundingClientRect();
+const buttonsRect = buttons.getBoundingClientRect();
+
+noBtn.style.left = `${yesRect.width + 40}px`;
+noBtn.style.top = `0px`;
+noBtn.style.transform = "none";
+
 
   function dodge(x, y) {
     const rect = noBtn.getBoundingClientRect();
