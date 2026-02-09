@@ -90,7 +90,7 @@ noBtn.style.transform = "none";
   function dodge(x, y) {
     const rect = noBtn.getBoundingClientRect();
 
-    const btnCenterX = rect.left + rect.width / 2;
+    const btnCenterX = rect.left + rect.width;
     const btnCenterY = rect.top + rect.height / 2;
 
     const dx = x - btnCenterX;
