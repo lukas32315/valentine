@@ -98,19 +98,24 @@ function dodge(x, y) {
   const dangerZone = 120;
 
   if (distance < dangerZone) {
-    const jump = 150; // max jump in any direction
-    // Random direction: left/right & up/down
+    const jump = 120; // max jump in px
+
+    // Random new position around current
     let newLeft = rect.left + (Math.random() > 0.5 ? jump : -jump);
     let newTop = rect.top + (Math.random() > 0.5 ? jump : -jump);
 
-    // Keep inside viewport
-    newLeft = Math.max(20, Math.min(window.innerWidth - rect.width - 20, newLeft));
-    newTop = Math.max(20, Math.min(window.innerHeight - rect.height - 20, newTop));
+    // Keep inside viewport (works for mobile)
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
 
+    newLeft = Math.max(10, Math.min(viewportWidth - rect.width - 10, newLeft));
+    newTop = Math.max(10, Math.min(viewportHeight - rect.height - 10, newTop));
+
+    // Apply new position
     noBtn.style.left = `${newLeft}px`;
     noBtn.style.top = `${newTop}px`;
 
-    // Show "Nice try" near the button
+    // Show message above button
     message.style.left = `${newLeft}px`;
     message.style.top = `${newTop - 40}px`;
     message.style.opacity = "1";
@@ -144,15 +149,26 @@ function dodge(x, y) {
 
 
   // Desktop
-  document.addEventListener("mousemove", (e) => {
-    dodge(e.clientX, e.clientY);
-  });
+document.addEventListener("mousemove", e => dodge(e.clientX, e.clientY));
 
-  // Mobile
-  document.addEventListener("touchmove", (e) => {
-    const touch = e.touches[0];
+// Mobile touch
+document.addEventListener("touchmove", e => {
+  const touch = e.touches[0];
+  if (touch) {
     dodge(touch.clientX, touch.clientY);
-  });
+  }
+});
+
+// Set initial position on page load (both desktop & mobile)
+function initNoBtnPosition() {
+  noBtn.style.position = "absolute";
+  noBtn.style.left = "200px"; // distance from Yes button
+  noBtn.style.top = "0px";
+  noBtn.style.transform = "none";
+}
+
+window.addEventListener("load", initNoBtnPosition);
+window.addEventListener("resize", initNoBtnPosition);
 </script>
 </body>
 </html>
