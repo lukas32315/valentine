@@ -82,7 +82,7 @@ const yesBtn = document.getElementById("yes");
 const yesRect = yesBtn.getBoundingClientRect();
 const buttonsRect = buttons.getBoundingClientRect();
 
-noBtn.style.right = `${yesRect.width + 60}px`;
+noBtn.style.left = `${yesRect.width - 60}px`;
 noBtn.style.top = `0px`;
 noBtn.style.transform = "none";
 
