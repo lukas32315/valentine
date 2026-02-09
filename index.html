@@ -82,7 +82,7 @@ const yesBtn = document.getElementById("yes");
 const yesRect = yesBtn.getBoundingClientRect();
 const buttonsRect = buttons.getBoundingClientRect();
 
-noBtn.style.left = `${yesRect.width + 40}px`;
+noBtn.style.left = `${yesRect.width + 80}px`;
 noBtn.style.top = `0px`;
 noBtn.style.transform = "none";
 
@@ -122,6 +122,26 @@ noBtn.style.transform = "none";
       }, 700);
     }
   }
+  document.getElementById("yes").addEventListener("click", () => {
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Comic Sans MS', cursive;
+      background:linear-gradient(135deg, #ff9a9e, #fad0c4);
+      color:#b30059;
+      font-size:2.8rem;
+      text-align:center;
+      padding:20px;
+    ">
+      💖 Great choice! 💖<br><br>
+      Can I have your number? :)
+    </div>
+  `;
+});
+
 
   // Desktop
   document.addEventListener("mousemove", (e) => {
