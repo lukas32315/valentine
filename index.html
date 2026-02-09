@@ -86,42 +86,42 @@ noBtn.style.left = `${yesRect.width - 60}px`;
 noBtn.style.top = `0px`;
 noBtn.style.transform = "none";
 
+// Function to dodge
+function dodge(x, y) {
+  const rect = noBtn.getBoundingClientRect();
+  const btnCenterX = rect.left + rect.width / 2;
+  const btnCenterY = rect.top + rect.height / 2;
 
-  function dodge(x, y) {
-    const rect = noBtn.getBoundingClientRect();
+  const dx = x - btnCenterX;
+  const dy = y - btnCenterY;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  const dangerZone = 120;
 
-    const btnCenterX = rect.left + rect.width;
-    const btnCenterY = rect.top + rect.height / 2;
+  if (distance < dangerZone) {
+    const jump = 150; // max jump in any direction
+    // Random direction: left/right & up/down
+    let newLeft = rect.left + (Math.random() > 0.5 ? jump : -jump);
+    let newTop = rect.top + (Math.random() > 0.5 ? jump : -jump);
 
-    const dx = x - btnCenterX;
-    const dy = y - btnCenterY;
+    // Keep inside viewport
+    newLeft = Math.max(20, Math.min(window.innerWidth - rect.width - 20, newLeft));
+    newTop = Math.max(20, Math.min(window.innerHeight - rect.height - 20, newTop));
 
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    const dangerZone = 110;
+    noBtn.style.left = `${newLeft}px`;
+    noBtn.style.top = `${newTop}px`;
 
-    if (distance < dangerZone) {
-      const jump = 140;
-      let newLeft = rect.left + (dx > 0 ? -jump : jump);
+    // Show "Nice try" near the button
+    message.style.left = `${newLeft}px`;
+    message.style.top = `${newTop - 40}px`;
+    message.style.opacity = "1";
 
-      // keep inside screen
-      newLeft = Math.max(
-        20,
-        Math.min(window.innerWidth - rect.width - 20, newLeft)
-      );
-
-      noBtn.style.left = `${newLeft}px`;
-
-      // show "Nice try" near the button
-      message.style.left = `${newLeft}px`;
-      message.style.top = `${rect.top - 40}px`;
-      message.style.opacity = "1";
-
-      clearTimeout(message.hideTimer);
-      message.hideTimer = setTimeout(() => {
-        message.style.opacity = "0";
-      }, 700);
-    }
+    clearTimeout(message.hideTimer);
+    message.hideTimer = setTimeout(() => {
+      message.style.opacity = "0";
+    }, 700);
   }
+}
+
   document.getElementById("yes").addEventListener("click", () => {
   document.body.innerHTML = `
     <div style="
